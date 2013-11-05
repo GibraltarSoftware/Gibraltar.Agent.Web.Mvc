@@ -1,34 +1,11 @@
-Loupe Agent for Entity Framework 6.0
+Loupe Agent for ASP.NET MVC 4 and Web API
 ===================
 
-This agent adds Entity Framework-specific monitoring features.  If you don't need
-to modify the source code just download the latest [Loupe Agent for Entity Framework](https://nuget.org/packages/Gibraltar.Agent.EntityFramework/).  
+This agent adds Loupe to your ASP.NET MVC 4 web site to automatically record performance
+and health information for your MVC and Web API application.  If you don't need
+to modify the source code just download the latest [Loupe Agent for ASP.NET MVC]().  
 It extends the [Loupe Agent](https://nuget.org/packages/Gibraltar.Agent/) so you can 
-use any viewer for Loupe to visualize network information
-
-Using the Agent
----------------
-
-To activate the agent it isn't enough to simply deploy it with your project, you need to make 
-one call to register it with Entity Framework.  The call can be made multiple times safely
-(and without causing a dobule regsitration).  Once registered with Entity Framework it will
-automatically record information for every EF 6.0 context in the application domain.
-
-```C#
-//Register the Interceptor
-Gibraltar.Agent.EntityFramework.LoupeCommandInterceptor.Register();
-```
-
-
-Implementation Notes
---------------------
-
-This extension works only with Entity Framework 6.0 RC 1 Build 20726 and later because it relies on the
-new database command interception features built into EF 6.0. Until EF 6 RC is published
-you will need to pull the nightly builds for Entity Framework from here:
-http://entityframework.codeplex.com/wikipage?title=Nightly%20Builds
-
-It is compiled for .NET 4.0 but is compatible with both .NET 4.0 and .NET 4.5.
+use any viewer for Loupe to review the agent's information
 
 
 Building the Agent
