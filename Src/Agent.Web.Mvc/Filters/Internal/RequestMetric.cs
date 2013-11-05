@@ -8,7 +8,7 @@ using Gibraltar.Agent.Metrics;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
 {
-    internal abstract class RequestMetric
+    internal abstract class RequestMetric: IMessageSourceProvider
     {
         private readonly Stopwatch _timer;
 
@@ -80,5 +80,13 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
             EventMetric.Write(this);
             SampledMetric.Write(this);
         }
+
+        public string MethodName { get; protected set; }
+
+        public string ClassName { get; protected set; }
+
+        public string FileName { get; protected set; }
+
+        public int LineNumber { get; protected set; }
     }
 }

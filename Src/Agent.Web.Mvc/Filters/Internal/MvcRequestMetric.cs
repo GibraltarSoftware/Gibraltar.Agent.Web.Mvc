@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,11 +8,8 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
     /// <summary>
     /// The tracking information for an MVC engine request
     /// </summary>
-    internal class MvcRequestMetric : RequestMetric, IMessageSourceProvider
+    internal class MvcRequestMetric : RequestMetric
     {
-        private readonly string _className;
-        private readonly string _methodName;
-
         public MvcRequestMetric(ActionExecutingContext actionContext)
         {
             var parameters = actionContext.ActionDescriptor.GetParameters().Select(p => p.ParameterName);
@@ -29,16 +24,10 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
             SubCategory = "MVC";
 
             //resolve the exact controller target.
-            _className = controllerDescriptor.ControllerType.FullName;
-            _methodName = actionContext.ActionDescriptor.ActionName; //BUGBUG: This is wrong; we want the real method
+            ClassName = controllerDescriptor.ControllerType.FullName;
+            MethodName = actionContext.ActionDescriptor.ActionName; //BUGBUG: This is wrong; we want the real method
+            FileName = null;
+            LineNumber = 0;
         }
-
-        string IMessageSourceProvider.MethodName { get { return _methodName; } }
-
-        string IMessageSourceProvider.ClassName { get { return _className; } }
-
-        string IMessageSourceProvider.FileName { get { return null; } }
-
-        int IMessageSourceProvider.LineNumber { get { return 0; } }
     }
 }

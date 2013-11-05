@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Agent.Web.Mvc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Loupe Agent for ASP.NET MVC 4")]
+[assembly: AssemblyDescription("Records performance, error, and tracing information for ASP.NET MVC and Web API using Loupe")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Agent.Web.Mvc")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("Gibraltar Software Inc.")]
+[assembly: AssemblyProduct("Gibraltar.Agent.EntityFramework")]
+[assembly: AssemblyCopyright("Copyright © 2013 Gibraltar Software Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.5.4.0")]
+[assembly: AssemblyFileVersion("3.5.4.1566")]
