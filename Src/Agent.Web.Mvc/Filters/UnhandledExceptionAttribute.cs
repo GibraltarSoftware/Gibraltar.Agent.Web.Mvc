@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Gibraltar.Agent.Web.Mvc.Configuration;
-using Gibraltar.Agent.Web.Mvc.Filters.Internal;
-using Gibraltar.Agent.Web.Mvc.Internal;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters
 {
