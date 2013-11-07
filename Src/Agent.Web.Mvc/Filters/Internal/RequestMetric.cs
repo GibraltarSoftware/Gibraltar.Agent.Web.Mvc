@@ -22,7 +22,7 @@ using Gibraltar.Agent.Metrics;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
 {
-    [EventMetric("Loupe", "Web Site", "Requests", Caption = "Requests", Description = "Performance data for every call to an MVC controller or Web API controller in the application")]
+    [EventMetric("Loupe", "Web Site.Requests", "Controller Hit", Caption = "Controller Hit", Description = "Performance data for every call to an MVC controller or Web API controller in the application")]
     internal abstract class RequestMetric: IMessageSourceProvider
     {
         private readonly Stopwatch _timer;
@@ -44,6 +44,12 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         public TimeSpan Duration { get { return _timer.Elapsed; }}
 
         /// <summary>
+        /// The controller and action referenced by the request
+        /// </summary>
+        [EventMetricValue("request", SummaryFunction.Count, null, Caption = "Request", Description = "The controller and action referenced by the request")]
+        public string Request { get { return string.Format("{0}:{1}", ControllerName, ActionName); } }
+
+        /// <summary>
         /// Gets/Sets a String which indicates if the Action was an MVC or WebApi action
         /// </summary>
         [EventMetricValue("subCategory", SummaryFunction.Count, null, Caption = "Subcategory", Description = "The type of API this request came from (MVC or Web API)")]
@@ -60,6 +66,12 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         /// </summary>
         [EventMetricValue("actionName", SummaryFunction.Count, null, Caption = "Action", Description = "The short-form name of the action used for the request (not the .NET method name)")]
         public String ActionName { get; protected set; }
+
+        /// <summary>
+        /// The class name name of the controller used for the request
+        /// </summary>
+        [EventMetricValue("controllerType", SummaryFunction.Count, null, Caption = "Controller Type", Description = "The class name name of the controller used for the request")]
+        public String ControllerType { get { return ClassName; } }
 
         /// <summary>
         /// Gets/Sets the HttpMethod (GET, POST, PUT, DELETE, etc) used for this action.
