@@ -7,6 +7,27 @@ to modify the source code just download the latest [Loupe Agent for ASP.NET MVC]
 It extends the [Loupe Agent](https://nuget.org/packages/Gibraltar.Agent/) so you can 
 use any viewer for Loupe to review the agent's information
 
+Using the Agent
+---------------
+
+To activate the agent you will need to register the relevant filters in your Global.asax.cs
+file or related initialization sequence.  An example would be:
+
+```C#
+using Gibraltar.Agent;
+using GIbraltar.Agent.Web.Mvc.Filters;
+
+protected void Application_Start()
+{
+    Log.StartSession(); //Prompt the Loupe Agent to start immediately
+
+	//Register the three filters
+	GlobalConfiguration.Configuration.Filters.Add(new WebApiRequestMonitorAttribute());
+	GlobalFilters.Filters.Add(new MvcRequestMonitorAttribute());
+	GlobalFilters.Filters.Add(new UnhandledExceptionAttribute());
+}
+```
+
 
 Building the Agent
 ------------------
