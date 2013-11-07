@@ -15,7 +15,7 @@ file or related initialization sequence.  An example would be:
 
 ```C#
 using Gibraltar.Agent;
-using GIbraltar.Agent.Web.Mvc.Filters;
+using Gibraltar.Agent.Web.Mvc.Filters;
 
 protected void Application_Start()
 {
