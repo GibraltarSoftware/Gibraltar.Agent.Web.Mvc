@@ -1,4 +1,22 @@
-﻿using System;
+﻿#region File Header and License
+// /*
+//    WebApiRequestMonitorAttribute.cs
+//    Copyright 2013 Gibraltar Software, Inc.
+//    
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// */
+#endregion
+using System;
 using System.Text;
 using System.Web;
 using System.Web.Http.Controllers;
@@ -51,7 +69,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             if (_configuration.LogRequests == false)
                 return;
 
-            var caption = string.Format("Web Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
+            var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
 
             var descriptionBuilder = new StringBuilder(1024);
             descriptionBuilder.AppendFormat("Controller: {0}\r\n", actionContext.ActionDescriptor.ControllerDescriptor.ControllerType);
@@ -62,13 +80,12 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
                 foreach (var param in actionContext.ActionDescriptor.GetParameters())
                 {
                     object value = actionContext.ActionArguments[param.ParameterName];
-                    descriptionBuilder.AppendFormat("- {0} = {1}\r\n", param.ParameterName,
+                    descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName,
                         Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
                 }
             }
 
-            descriptionBuilder.AppendFormat("URL: {0}\r\n", HttpContext.Current.Request.Url);
-            descriptionBuilder.AppendFormat("Request Id: {0}\r\n", tracker.UniqueId);
+            descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
 
             Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
                 LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
