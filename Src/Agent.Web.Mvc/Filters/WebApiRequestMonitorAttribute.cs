@@ -27,6 +27,34 @@ using Gibraltar.Agent.Web.Mvc.Internal;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters
 {
+    /// <summary>
+    /// An ASP.NET Web API Action Filter that logs diagnostic and performance information for Web API requests
+    /// </summary>
+    /// <remarks>
+    /// 	<para>This filter records log messages for every controller action that is invoked and a performance metric recording the duration of each action.  If an
+    /// action throws an exception that is also recorded, however it's advisable to also register the Unhandled Exception filter to ensure all exceptions are
+    /// recorded.</para>
+    /// </remarks>
+    /// <example>
+    /// 	<code title="Enabling the Request Monitor" description="The fastest way to enable the request monitor for all of the controllers is to register it into the global filters collection like this example" lang="CS">
+    /// using Gibraltar.Agent;
+    /// using Gibraltar.Agent.Web.Mvc.Filters;
+    ///  
+    /// namespace YourSite
+    /// {
+    ///     public class MvcApplication : System.Web.HttpApplication
+    ///     {
+    ///         protected void Application_Start()
+    ///         {
+    ///             Log.StartSession(); //Prompt the Loupe Agent to start immediately
+    ///  
+    ///             //Register the Web API and Exception filters
+    ///             GlobalConfiguration.Configuration.Filters.Add(new WebApiRequestMonitorAttribute());
+    ///             GlobalFilters.Filters.Add(new UnhandledExceptionAttribute());
+    ///         }
+    ///     }
+    /// }</code>
+    /// </example>
     public class WebApiRequestMonitorAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
         private const string LogSystem = "Loupe";
