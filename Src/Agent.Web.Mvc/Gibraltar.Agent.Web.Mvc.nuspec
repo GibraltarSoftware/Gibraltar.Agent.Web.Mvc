@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Gibraltar.Agent.Web.Mvc</id>
-    <version>3.5.6.1696</version>
-    <title>Gibraltar Loupe Agent for MVC and Web API</title>
+    <version>3.5.4.1568</version>
+    <title>Gibraltar Loupe Agent for ASP.NET MVC and Web API</title>
     <authors>Gibraltar Software</authors>
     <owners>Gibraltar Software</owners>
-    <licenseUrl>http://www.gibraltarsoftware.com/Support/Documentation.aspx?Page=Reference_GibraltarAgentLicense.html</licenseUrl>
-    <projectUrl>http://www.gibraltarsoftware.com</projectUrl>
+    <licenseUrl>https://github.com/GibraltarSoftware/Gibraltar.Agent.Web.Mvc/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/GibraltarSoftware/Gibraltar.Agent.Web.Mvc</projectUrl>
     <iconUrl>http://www.gibraltarsoftware.com/loupe.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Records performance, error, and tracing information for ASP.NET MVC and Web API.  Designed for use in a production environment, it extends the Loupe Agent with features specific to MVC 4.</description>
