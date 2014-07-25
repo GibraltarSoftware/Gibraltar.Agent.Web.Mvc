@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Gibraltar.Agent.Web.Mvc</id>
-    <version>3.6.0.1923</version>
+    <version>3.6.0.1934</version>
     <title>Gibraltar Loupe Agent for ASP.NET MVC and Web API</title>
     <authors>Gibraltar Software</authors>
     <owners>Gibraltar Software</owners>

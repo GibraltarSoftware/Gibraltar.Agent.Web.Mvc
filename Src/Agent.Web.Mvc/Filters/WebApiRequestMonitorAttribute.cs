@@ -18,6 +18,7 @@
 #endregion
 using System;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -126,6 +127,11 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             if (tracker != null)
             {
                 tracker.Exception = actionContext.Exception;
+                if ((Thread.CurrentPrincipal != null) && (Thread.CurrentPrincipal.Identity != null))
+                {
+                    tracker.UserName = Thread.CurrentPrincipal.Identity.Name;
+                }
+
                 tracker.Record();
             }
 
