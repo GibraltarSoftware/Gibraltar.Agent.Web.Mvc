@@ -95,29 +95,31 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             HttpContext.Current.Store(tracker);
 
             //And log the request
-            if (_configuration.LogRequests == false)
-                return;
-
-            var caption = string.Format("Web Site {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
-
-            var descriptionBuilder = new StringBuilder(1024);
-            descriptionBuilder.AppendFormat("Controller: {0}\r\n", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
-            descriptionBuilder.AppendFormat("Action: {0}\r\n", filterContext.ActionDescriptor.ActionName);
-            if (_configuration.LogRequestParameters)
+            if (_configuration.LogRequests)
             {
-                descriptionBuilder.AppendLine("Parameters:");
-                foreach (var param in filterContext.ActionDescriptor.GetParameters())
+                var caption = string.Format("Web Site {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
+
+                var descriptionBuilder = new StringBuilder(1024);
+                descriptionBuilder.AppendFormat("Controller: {0}\r\n", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
+                descriptionBuilder.AppendFormat("Action: {0}\r\n", filterContext.ActionDescriptor.ActionName);
+                if (_configuration.LogRequestParameters)
                 {
-                    object value = filterContext.ActionParameters[param.ParameterName];
-                    descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName, 
-                        Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
+                    descriptionBuilder.AppendLine("Parameters:");
+                    foreach (var param in filterContext.ActionDescriptor.GetParameters())
+                    {
+                        object value = filterContext.ActionParameters[param.ParameterName];
+                        descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName,
+                            Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
+                    }
                 }
+
+                descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
+
+                Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
+                    LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
             }
 
-            descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
-   
-            Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
-                LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
+            base.OnActionExecuting(filterContext);
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -136,6 +138,8 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             }
 
             //we log exceptions in our unhandled exception attribute
+
+            base.OnActionExecuted(filterContext);
         }
     }
 }

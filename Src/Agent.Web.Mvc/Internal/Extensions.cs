@@ -100,7 +100,7 @@ namespace Gibraltar.Agent.Web.Mvc.Internal
         internal static void Store(this HttpContext context, RequestMetric metricTracker)
         {
             string key = HttpContextMetricPrefix + metricTracker.UniqueId;
-            context.Items.Add(key, metricTracker);
+            context.Items[key] = metricTracker;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Gibraltar.Agent.Web.Mvc.Internal
         /// <param name="metricTracker"></param>
         internal static void Store(this HttpRequestMessage context, RequestMetric metricTracker)
         {
-            context.Properties.Add(HttpContextMetricPrefix, metricTracker);
+            context.Properties[HttpContextMetricPrefix] = metricTracker;
         }
 
         /// <summary>

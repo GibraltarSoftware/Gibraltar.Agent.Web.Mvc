@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="Gibraltar.Agent, Version=3.7.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Gibraltar.Agent.3.7.0.2102\lib\4.0\Gibraltar.Agent.dll</HintPath>
+      <HintPath>..\..\packages\Gibraltar.Agent.3.7.2.2199\lib\4.0\Gibraltar.Agent.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -76,7 +76,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release $(ProjectDir)..\..\.nuget\NuGet.exe Pack $(ProjectPath) -Prop Configuration=Release
+    <PostBuildEvent>if $(ConfigurationName) == Release $(ProjectDir)..\..\dependencies\NuGet.exe Pack $(ProjectPath) -Prop Configuration=Release
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
