@@ -40,7 +40,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         /// The duration the request has been running
         /// </summary>
         /// <remarks>Once the request has been told to record it the timer duration will stop increasing.</remarks>
-        [EventMetricValue("duration", SummaryFunction.Average, "ms", Caption = "Duration", Description = "The entire time spent procesing the request, excluding time to return the response", IsDefaultValue = true)]
+        [EventMetricValue("duration", SummaryFunction.Average, "ms", Caption = "Duration", Description = "The entire time spent processing the request, excluding time to return the response", IsDefaultValue = true)]
         public TimeSpan Duration { get { return _timer.Elapsed; }}
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         public String SubCategory { get; protected set; }
 
         /// <summary>
-        /// Gets/Sets the nme of the controller this action belongs to
+        /// Gets/Sets the name of the controller this action belongs to
         /// </summary>
         [EventMetricValue("controllerName", SummaryFunction.Count, null, Caption = "Controller", Description = "The short-form name of the controller used for the request (not the .NET class name)")]
         public String ControllerName { get; protected set; }
@@ -68,9 +68,9 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         public String ActionName { get; protected set; }
 
         /// <summary>
-        /// The class name name of the controller used for the request
+        /// The class name of the controller used for the request
         /// </summary>
-        [EventMetricValue("controllerType", SummaryFunction.Count, null, Caption = "Controller Type", Description = "The class name name of the controller used for the request")]
+        [EventMetricValue("controllerType", SummaryFunction.Count, null, Caption = "Controller Type", Description = "The class name of the controller used for the request")]
         public String ControllerType { get { return ClassName; } }
 
         /// <summary>
