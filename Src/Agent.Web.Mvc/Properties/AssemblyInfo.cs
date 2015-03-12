@@ -51,4 +51,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.7.0.0")]
-[assembly: AssemblyFileVersion("3.7.0.2102")] //this is synchronized with the Loupe agent version number
+[assembly: AssemblyFileVersion("3.7.2.2199")] //this is synchronized with the Loupe agent version number

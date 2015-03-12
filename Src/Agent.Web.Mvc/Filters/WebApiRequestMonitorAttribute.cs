@@ -118,6 +118,8 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
 
             Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
                 LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
+
+            base.OnActionExecuting(actionContext);
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionContext)
@@ -136,6 +138,8 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             }
 
             //we log exceptions in our unhandled exception attribute
+
+            base.OnActionExecuted(actionContext);
         }
     }
 }

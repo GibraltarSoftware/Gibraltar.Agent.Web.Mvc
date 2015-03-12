@@ -93,21 +93,21 @@ namespace Gibraltar.Agent.Web.Mvc.Internal
         }
 
         /// <summary>
-        /// Store a request metric into the http context for later use
+        /// Store a request metric into the HTTP context for later use
         /// </summary>
         /// <param name="context"></param>
         /// <param name="metricTracker"></param>
         internal static void Store(this HttpContext context, RequestMetric metricTracker)
         {
             string key = HttpContextMetricPrefix + metricTracker.UniqueId;
-            context.Items.Add(key, metricTracker);
+            context.Items[key] = metricTracker;
         }
 
         /// <summary>
-        /// Retrieve a request metric from the http context
+        /// Retrieve a request metric from the HTTP context
         /// </summary>
         /// <typeparam name="TMetric">The specific type of request metric to return</typeparam>
-        /// <param name="context">The current Http context</param>
+        /// <param name="context">The current HTTP context</param>
         /// <param name="uniqueId">the unique id of the request to retrieve the metric for</param>
         /// <returns>The request metric or null if it couldn't be found or was of an incompatible type</returns>
         internal static TMetric Retrieve<TMetric>(this HttpContext context, string uniqueId)
@@ -122,20 +122,20 @@ namespace Gibraltar.Agent.Web.Mvc.Internal
         }
 
         /// <summary>
-        /// Store a request metric into the http context for later use
+        /// Store a request metric into the HTTP context for later use
         /// </summary>
         /// <param name="context"></param>
         /// <param name="metricTracker"></param>
         internal static void Store(this HttpRequestMessage context, RequestMetric metricTracker)
         {
-            context.Properties.Add(HttpContextMetricPrefix, metricTracker);
+            context.Properties[HttpContextMetricPrefix] = metricTracker;
         }
 
         /// <summary>
-        /// Retrieve a request metric from the http context
+        /// Retrieve a request metric from the HTTP context
         /// </summary>
         /// <typeparam name="TMetric">The specific type of request metric to return</typeparam>
-        /// <param name="context">The current Http context</param>
+        /// <param name="context">The current HTTP context</param>
         /// <returns>The request metric or null if it couldn't be found or was of an incompatible type</returns>
         internal static TMetric Retrieve<TMetric>(this HttpRequestMessage context)
             where TMetric : RequestMetric

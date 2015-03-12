@@ -81,7 +81,7 @@ namespace Gibraltar.Agent.Web.Mvc.Configuration
         public LogMessageSeverity UnhandledExceptionSeverity { get { return (LogMessageSeverity)this["unhandledExceptionSeverity"]; } set { this["unhandledExceptionSeverity"] = value; } }
 
         /// <summary>
-        /// Load the elemnt from the system configuration file, falling back to defaults if it can't be parsed
+        /// Load the element from the system configuration file, falling back to defaults if it can't be parsed
         /// </summary>
         /// <returns>A new element object</returns>
         internal static MvcAgentElement SafeLoad()
@@ -95,7 +95,7 @@ namespace Gibraltar.Agent.Web.Mvc.Configuration
             catch (Exception ex)
             {
                 Log.Error(ex, LogCategory + ".Agent", "Unable to load the MVC Agent configuration from the config file",
-                          "The default configuration will be used which will no doubtedly create unexpected behavior.  Exception:\r\n{0}", ex.Message);
+                          "The default configuration will be used which will undoubtedly create unexpected behavior.  Exception:\r\n{0}", ex.Message);
             }
 
             return configuration ?? new MvcAgentElement();            

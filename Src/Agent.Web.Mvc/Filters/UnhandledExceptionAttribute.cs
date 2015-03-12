@@ -23,7 +23,7 @@ using Gibraltar.Agent.Web.Mvc.Configuration;
 namespace Gibraltar.Agent.Web.Mvc.Filters
 {
     /// <summary>
-    /// Manages unhandles exceptions
+    /// Manages unhandled exceptions
     /// </summary>
     public class UnhandledExceptionAttribute : HandleErrorAttribute 
     {
