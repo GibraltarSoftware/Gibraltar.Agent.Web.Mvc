@@ -24,6 +24,7 @@ using System.Web.Mvc;
 using Gibraltar.Agent.Web.Mvc.Configuration;
 using Gibraltar.Agent.Web.Mvc.Filters.Internal;
 using Gibraltar.Agent.Web.Mvc.Internal;
+using Extensions = Gibraltar.Agent.Web.Mvc.Internal.Extensions;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters
 {
@@ -100,6 +101,9 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
                 var caption = string.Format("Web Site {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
 
                 var descriptionBuilder = new StringBuilder(1024);
+
+                AddSessionIds(descriptionBuilder);
+
                 descriptionBuilder.AppendFormat("Controller: {0}\r\n", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
                 descriptionBuilder.AppendFormat("Action: {0}\r\n", filterContext.ActionDescriptor.ActionName);
                 if (_configuration.LogRequestParameters)
@@ -115,11 +119,67 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
 
                 descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
 
+                var details = CreateDetails(filterContext);
+
                 Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
-                    LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
+                    LogWriteMode.Queued, details, Category, caption, descriptionBuilder.ToString());
             }
 
             base.OnActionExecuting(filterContext);
+        }
+
+        private string CreateDetails(ActionExecutingContext filterContext)
+        {
+            var details = new StringBuilder();
+            string sessionId = HttpContext.Current.GetSessionId();
+            string agentSessionId = HttpContext.Current.GetAgentSessionId();
+
+            details.Append("<Details>");
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                details.AppendFormat("<SessionId>{0}</SessionId>", sessionId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(agentSessionId))
+            {
+                details.AppendFormat("<AgentSessionId>{0}</AgentSessionId>", agentSessionId);
+            }
+
+            details.AppendFormat("<Controller>{0}</Controller>", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
+            details.AppendFormat("<Action>{0}</Action>", filterContext.ActionDescriptor.ActionName);
+            if (_configuration.LogRequestParameters)
+            {
+                details.Append("<Parameters>");
+                foreach (var param in filterContext.ActionDescriptor.GetParameters())
+                {
+                    object value = filterContext.ActionParameters[param.ParameterName];
+                     details.AppendFormat("<Parameter name='{0}' value='{1}' />", param.ParameterName,
+                        Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
+                }
+                details.Append("</Parameters>");
+            }
+
+            details.AppendFormat("<Url>{0}</Url>", HttpContext.Current.Request.Url);
+
+            details.Append("</Details>");
+
+            return details.ToString();
+        }
+
+        private void AddSessionIds(StringBuilder descriptionBuilder)
+        {
+            string sessionId = HttpContext.Current.GetSessionId();
+            string agentId = HttpContext.Current.GetAgentSessionId();
+
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                descriptionBuilder.AppendFormat("SessionId: {0}\r\n", sessionId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(agentId))
+            {
+                descriptionBuilder.AppendFormat("JS Agent SessionId: {0}\r\n", agentId);
+            }
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)

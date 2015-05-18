@@ -17,6 +17,7 @@
 // */
 #endregion
 using System;
+using System.Collections;
 using System.Net.Http;
 using System.Web;
 using Gibraltar.Agent.Web.Mvc.Filters.Internal;
@@ -141,6 +142,17 @@ namespace Gibraltar.Agent.Web.Mvc.Internal
             where TMetric : RequestMetric
         {
             return context.Properties[HttpContextMetricPrefix] as TMetric;
+        }
+
+        internal static string GetSessionId(this HttpContext context)
+        {
+            return HttpContext.Current.Items["LoupeSessionId"] as string;
+    
+        }
+
+        internal static string GetAgentSessionId(this HttpContext context)
+        {
+            return HttpContext.Current.Items["LoupeAgentSessionId"] as string;
         }
     }
 }

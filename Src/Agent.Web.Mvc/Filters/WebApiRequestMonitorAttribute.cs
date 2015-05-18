@@ -101,6 +101,9 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
 
             var descriptionBuilder = new StringBuilder(1024);
+            
+            AddSessionIds(descriptionBuilder);
+
             descriptionBuilder.AppendFormat("Controller: {0}\r\n", actionContext.ActionDescriptor.ControllerDescriptor.ControllerType);
             descriptionBuilder.AppendFormat("Action: {0}\r\n", actionContext.ActionDescriptor.ActionName);
             if (_configuration.LogRequestParameters)
@@ -120,6 +123,22 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
                 LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
 
             base.OnActionExecuting(actionContext);
+        }
+
+        private void AddSessionIds(StringBuilder descriptionBuilder)
+        {
+            string sessionId = HttpContext.Current.GetSessionId();
+            string agentId =  HttpContext.Current.GetAgentSessionId();
+
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                descriptionBuilder.AppendFormat("SessionId: {0}\r\n", sessionId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(agentId))
+            {
+                descriptionBuilder.AppendFormat("JS Agent SessionId: {0}\r\n", agentId);
+            }
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionContext)
