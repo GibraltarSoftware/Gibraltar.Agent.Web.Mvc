@@ -13,9 +13,6 @@
     <description>Records performance, error, and tracing information for ASP.NET MVC and Web API.  Designed for use in a production environment, it extends the Loupe Agent with features specific to MVC 4.</description>
     <summary />
     <tags>Loupe Logging ASP.NET MVC WebApi</tags>
-    <dependencies>
-      <dependency id="Gibraltar.Agent" version="3.7.4.2481" />
-    </dependencies>	
   </metadata>
   <files>
     <file src="bin\release\Gibraltar.Agent.Web.Mvc.pdb" target="lib\net40" />
