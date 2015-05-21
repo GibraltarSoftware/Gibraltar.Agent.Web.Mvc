@@ -18,7 +18,9 @@
 #endregion
 using System;
 using System.Diagnostics;
+using System.Web;
 using Gibraltar.Agent.Metrics;
+using Gibraltar.Agent.Web.Mvc.Internal;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
 {
@@ -31,6 +33,9 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         {
             StartTimestamp = DateTimeOffset.Now;
             _timer = Stopwatch.StartNew();
+
+            SessionId = HttpContext.Current.GetSessionId();
+            AgentSessionId = HttpContext.Current.GetAgentSessionId();
         }
 
         [EventMetricValue("startTimestamp", SummaryFunction.Count, null, Caption = "Started", Description = "Timestamp the request started")]
@@ -106,6 +111,15 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         /// </summary>
         [EventMetricValue("exception", SummaryFunction.Count, null, Caption = "Exception", Description = "The exception, if any, thrown at the completion of the routine")]
         public Exception Exception { get; set; }
+
+        /// <summary>
+        /// Id to identify a user session from the web browser
+        /// </summary>
+        [EventMetricValue("SessionId", SummaryFunction.Count, null, Caption = "SessionId", Description = "Session Id associated with action being performed")]
+        public string SessionId { get; set; }
+
+        [EventMetricValue("AgentSessionId", SummaryFunction.Count, null, Caption = "AgentSessionId", Description = "Id from JavaScript agent for session")]
+        public string AgentSessionId { get; set; }
 
         /// <summary>
         /// Records the metrics for this request
