@@ -65,7 +65,9 @@
     <Compile Include="Filters\MvcRequestMonitorAttribute.cs" />
     <Compile Include="Filters\UnhandledExceptionAttribute.cs" />
     <Compile Include="Filters\WebApiRequestMonitorAttribute.cs" />
+    <Compile Include="Internal\AgentActionContext.cs" />
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Internal\MonitorRequestLogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

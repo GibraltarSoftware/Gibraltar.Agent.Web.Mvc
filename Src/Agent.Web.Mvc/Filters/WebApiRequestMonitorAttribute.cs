@@ -17,6 +17,9 @@
 // */
 #endregion
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -58,7 +61,6 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     /// </example>
     public class WebApiRequestMonitorAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
-        private const string LogSystem = "Loupe";
         private readonly MvcAgentElement _configuration;
 
         /// <summary>
@@ -99,86 +101,13 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
                 return;
 
             var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
+            var requestLogging = new MonitorRequestLogging(actionContext,_configuration);
 
-            var descriptionBuilder = new StringBuilder(1024);
+            requestLogging.Log(Category,caption,tracker.UserName,tracker);
+
             
-            AddSessionIds(descriptionBuilder);
-
-            descriptionBuilder.AppendFormat("Controller: {0}\r\n", actionContext.ActionDescriptor.ControllerDescriptor.ControllerType);
-            descriptionBuilder.AppendFormat("Action: {0}\r\n", actionContext.ActionDescriptor.ActionName);
-            if (_configuration.LogRequestParameters)
-            {
-                descriptionBuilder.AppendLine("Parameters:");
-                foreach (var param in actionContext.ActionDescriptor.GetParameters())
-                {
-                    object value = actionContext.ActionArguments[param.ParameterName];
-                    descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName,
-                        Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
-                }
-            }
-
-            descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
-
-            var details = CreateDetails(actionContext);
-
-            Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
-                LogWriteMode.Queued, details, Category, caption, descriptionBuilder.ToString());
 
             base.OnActionExecuting(actionContext);
-        }
-
-        private void AddSessionIds(StringBuilder descriptionBuilder)
-        {
-            string sessionId = HttpContext.Current.GetSessionId();
-            string agentId =  HttpContext.Current.GetAgentSessionId();
-
-            if (!string.IsNullOrWhiteSpace(sessionId))
-            {
-                descriptionBuilder.AppendFormat("SessionId: {0}\r\n", sessionId);
-            }
-
-            if (!string.IsNullOrWhiteSpace(agentId))
-            {
-                descriptionBuilder.AppendFormat("JS Agent SessionId: {0}\r\n", agentId);
-            }
-        }
-
-        private string CreateDetails(HttpActionContext filterContext)
-        {
-            var details = new StringBuilder();
-            string sessionId = HttpContext.Current.GetSessionId();
-            string agentSessionId = HttpContext.Current.GetAgentSessionId();
-
-            details.Append("<Details>");
-            if (!string.IsNullOrWhiteSpace(sessionId))
-            {
-                details.AppendFormat("<SessionId>{0}</SessionId>", sessionId);
-            }
-
-            if (!string.IsNullOrWhiteSpace(agentSessionId))
-            {
-                details.AppendFormat("<AgentSessionId>{0}</AgentSessionId>", agentSessionId);
-            }
-
-            details.AppendFormat("<Controller>{0}</Controller>", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
-            details.AppendFormat("<Action>{0}</Action>", filterContext.ActionDescriptor.ActionName);
-            if (_configuration.LogRequestParameters)
-            {
-                details.Append("<Parameters>");
-                foreach (var param in filterContext.ActionDescriptor.GetParameters())
-                {
-                    object value = filterContext.ActionArguments[param.ParameterName];
-                    details.AppendFormat("<Parameter name='{0}' value='{1}' />", param.ParameterName,
-                       Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
-                }
-                details.Append("</Parameters>");
-            }
-
-            details.AppendFormat("<Url>{0}</Url>", HttpContext.Current.Request.Url);
-
-            details.Append("</Details>");
-
-            return details.ToString();
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionContext)
