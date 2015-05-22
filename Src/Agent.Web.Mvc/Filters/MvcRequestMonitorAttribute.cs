@@ -24,6 +24,7 @@ using System.Web.Mvc;
 using Gibraltar.Agent.Web.Mvc.Configuration;
 using Gibraltar.Agent.Web.Mvc.Filters.Internal;
 using Gibraltar.Agent.Web.Mvc.Internal;
+using Extensions = Gibraltar.Agent.Web.Mvc.Internal.Extensions;
 
 namespace Gibraltar.Agent.Web.Mvc.Filters
 {
@@ -57,7 +58,6 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     /// </example>
     public class MvcRequestMonitorAttribute : ActionFilterAttribute
     {
-        private const string LogSystem = "Loupe";
         private readonly MvcAgentElement _configuration;
 
         /// <summary>
@@ -99,24 +99,9 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             {
                 var caption = string.Format("Web Site {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
 
-                var descriptionBuilder = new StringBuilder(1024);
-                descriptionBuilder.AppendFormat("Controller: {0}\r\n", filterContext.ActionDescriptor.ControllerDescriptor.ControllerType);
-                descriptionBuilder.AppendFormat("Action: {0}\r\n", filterContext.ActionDescriptor.ActionName);
-                if (_configuration.LogRequestParameters)
-                {
-                    descriptionBuilder.AppendLine("Parameters:");
-                    foreach (var param in filterContext.ActionDescriptor.GetParameters())
-                    {
-                        object value = filterContext.ActionParameters[param.ParameterName];
-                        descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName,
-                            Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
-                    }
-                }
+                var requestLogging = new MonitorRequestLogging(filterContext, _configuration);
+                requestLogging.Log(Category,caption,tracker.UserName, tracker);
 
-                descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
-
-                Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
-                    LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
             }
 
             base.OnActionExecuting(filterContext);
