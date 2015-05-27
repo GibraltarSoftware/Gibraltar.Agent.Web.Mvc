@@ -7,6 +7,8 @@ to modify the source code just download the latest [Loupe Agent for ASP.NET MVC]
 It extends the [Loupe Agent](https://nuget.org/packages/Gibraltar.Agent/) so you can 
 use any viewer for Loupe to review the agent's information
 
+You can install it directly from nuget [here](https://www.nuget.org/packages/Gibraltar.Agent.Web.Mvc/)
+
 Using the Agent
 ---------------
 
