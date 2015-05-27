@@ -17,6 +17,9 @@
 // */
 #endregion
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -58,7 +61,6 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     /// </example>
     public class WebApiRequestMonitorAttribute : System.Web.Http.Filters.ActionFilterAttribute
     {
-        private const string LogSystem = "Loupe";
         private readonly MvcAgentElement _configuration;
 
         /// <summary>
@@ -99,25 +101,11 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
                 return;
 
             var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
+            var requestLogging = new MonitorRequestLogging(actionContext,_configuration);
 
-            var descriptionBuilder = new StringBuilder(1024);
-            descriptionBuilder.AppendFormat("Controller: {0}\r\n", actionContext.ActionDescriptor.ControllerDescriptor.ControllerType);
-            descriptionBuilder.AppendFormat("Action: {0}\r\n", actionContext.ActionDescriptor.ActionName);
-            if (_configuration.LogRequestParameters)
-            {
-                descriptionBuilder.AppendLine("Parameters:");
-                foreach (var param in actionContext.ActionDescriptor.GetParameters())
-                {
-                    object value = actionContext.ActionArguments[param.ParameterName];
-                    descriptionBuilder.AppendFormat("- {0}: {1}\r\n", param.ParameterName,
-                        Extensions.ObjectToString(value, _configuration.LogRequestParameterDetails));
-                }
-            }
+            requestLogging.Log(Category,caption,tracker.UserName,tracker);
 
-            descriptionBuilder.AppendFormat("\r\nURL: {0}\r\n", HttpContext.Current.Request.Url);
-
-            Log.Write(_configuration.RequestMessageSeverity, LogSystem, tracker, tracker.UserName, null,
-                LogWriteMode.Queued, null, Category, caption, descriptionBuilder.ToString());
+            
 
             base.OnActionExecuting(actionContext);
         }

@@ -35,9 +35,9 @@
     <DocumentationFile>bin\Release\Gibraltar.Agent.Web.Mvc.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gibraltar.Agent, Version=3.7.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Gibraltar.Agent.3.7.2.2199\lib\4.0\Gibraltar.Agent.dll</HintPath>
+    <Reference Include="Gibraltar.Agent, Version=3.7.3.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Gibraltar.Agent.3.7.4.2481\lib\4.0\Gibraltar.Agent.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -65,7 +65,9 @@
     <Compile Include="Filters\MvcRequestMonitorAttribute.cs" />
     <Compile Include="Filters\UnhandledExceptionAttribute.cs" />
     <Compile Include="Filters\WebApiRequestMonitorAttribute.cs" />
+    <Compile Include="Internal\AgentActionContext.cs" />
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Internal\MonitorRequestLogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
