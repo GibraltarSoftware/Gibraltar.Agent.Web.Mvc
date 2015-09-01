@@ -52,4 +52,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("3.8.1.2710")] //this is synchronized with the Loupe agent version number
-[assembly: AssemblyInformationalVersion("4.0.0")]
+[assembly: AssemblyInformationalVersion("3.8.1.2710")]
