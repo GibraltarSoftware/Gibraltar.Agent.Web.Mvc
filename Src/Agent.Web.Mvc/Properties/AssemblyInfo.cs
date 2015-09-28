@@ -26,9 +26,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Loupe Agent for ASP.NET MVC 4")]
 [assembly: AssemblyDescription("Records performance, error, and tracing information for ASP.NET MVC and Web API using Loupe")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gibraltar Software Inc.")]
+[assembly: AssemblyCompany("Gibraltar Software, Inc.")]
 [assembly: AssemblyProduct("Loupe")]
-[assembly: AssemblyCopyright("Copyright © 2013-2014 Gibraltar Software Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2013-2015 Gibraltar Software, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -50,6 +50,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.8.0.0")]
-[assembly: AssemblyFileVersion("3.7.2.2199")] //this is synchronized with the Loupe agent version number
-[assembly: AssemblyInformationalVersion("3.8.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.3015")] //this is synchronized with the Loupe agent version number
+[assembly: AssemblyInformationalVersion("4.0.0.3015")]
