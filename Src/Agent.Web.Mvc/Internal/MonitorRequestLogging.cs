@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Mvc;
 using Gibraltar.Agent.Web.Mvc.Configuration;
+#pragma warning disable 1591
 
 namespace Gibraltar.Agent.Web.Mvc.Internal
 {
