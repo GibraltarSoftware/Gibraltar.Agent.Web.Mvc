@@ -49,6 +49,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             _configuration = configuration;
         }
 
+        /// <inheritdoc />
         public override void OnException(ExceptionContext filterContext)
         {
             //here we want to interrogate the filter context for route information, 

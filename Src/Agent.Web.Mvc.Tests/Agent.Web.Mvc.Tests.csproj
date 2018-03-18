@@ -38,9 +38,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gibraltar.Agent, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Gibraltar.Agent.4.0.0.3015\lib\net40\Gibraltar.Agent.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Gibraltar.Agent, Version=4.5.0.0, Culture=neutral, PublicKeyToken=ca42a1ee8d2e42d3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Gibraltar.Agent.4.6.4\lib\net40\Gibraltar.Agent.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>

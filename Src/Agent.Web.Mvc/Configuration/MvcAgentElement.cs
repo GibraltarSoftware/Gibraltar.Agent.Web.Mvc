@@ -19,6 +19,7 @@
 using System;
 using System.Configuration;
 using System.Web.UI;
+#pragma warning disable 1591
 
 namespace Gibraltar.Agent.Web.Mvc.Configuration
 {

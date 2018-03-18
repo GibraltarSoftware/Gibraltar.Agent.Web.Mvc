@@ -88,6 +88,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
         /// </summary>
         public string Category { get; set; }
 
+        /// <inheritdoc />
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             //create our request tracking object
@@ -110,6 +111,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             base.OnActionExecuting(actionContext);
         }
 
+        /// <inheritdoc />
         public override void OnActionExecuted(HttpActionExecutedContext actionContext)
         {
             //find our request tracking object.  Be wary because it might not be there any more if someone is messing with us
