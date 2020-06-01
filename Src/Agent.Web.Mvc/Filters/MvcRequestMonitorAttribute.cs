@@ -59,7 +59,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     public class MvcRequestMonitorAttribute : ActionFilterAttribute
     {
         private readonly MvcAgentElement _configuration;
-        private readonly bool _enableDebugMode;
+        private readonly bool _enableDebugMode; //we don't have ready access to the Loupe running config; ignoring for now.
         private readonly UrlCheck _urlCheck;
 
         /// <summary>
