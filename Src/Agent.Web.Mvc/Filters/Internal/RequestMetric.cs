@@ -121,13 +121,22 @@ namespace Gibraltar.Agent.Web.Mvc.Filters.Internal
         [EventMetricValue("AgentSessionId", SummaryFunction.Count, null, Caption = "AgentSessionId", Description = "Id from JavaScript agent for session")]
         public string AgentSessionId { get; set; }
 
+
+        /// <summary>
+        /// Suppress recording this metric
+        /// </summary>
+        /// <remarks>This is used by Loupe to prevent recording of Loupe Module requests but can be used by any code to prevent recording a metric for a request.</remarks>
+        public bool Suppress { get; set; }
+
         /// <summary>
         /// Records the metrics for this request
         /// </summary>
         public void Record()
         {
             _timer.Stop(); 
-            EventMetric.Write(this);
+
+            if (!Suppress)
+                EventMetric.Write(this);
         }
 
         public string MethodName { get; protected set; }

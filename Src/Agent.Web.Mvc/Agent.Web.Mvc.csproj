@@ -67,6 +67,7 @@
     <Compile Include="Internal\AgentActionContext.cs" />
     <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Internal\MonitorRequestLogging.cs" />
+    <Compile Include="Internal\UrlCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
