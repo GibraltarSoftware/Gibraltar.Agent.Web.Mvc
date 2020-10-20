@@ -59,9 +59,11 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     ///     }
     /// }</code>
     /// </example>
-    public class WebApiRequestMonitorAttribute : System.Web.Http.Filters.ActionFilterAttribute
+    public class WebApiRequestMonitorAttribute : ActionFilterAttribute
     {
         private readonly MvcAgentElement _configuration;
+        private readonly bool _enableDebugMode; //we don't have ready access to the Loupe running config; ignoring for now.
+        private readonly UrlCheck _urlCheck;
 
         /// <summary>
         /// Monitor MVC requests using the site-wide configuration settings
@@ -78,9 +80,11 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
         public WebApiRequestMonitorAttribute(MvcAgentElement configuration)
         {
             if (configuration == null)
-                throw new ArgumentNullException("configuration");
+                throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
+
+            _urlCheck = new UrlCheck();
         }
 
         /// <summary>
@@ -94,19 +98,21 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             //create our request tracking object
             var tracker = new WebApiRequestMetric(actionContext);
 
+            //If this is a Loupe client request then we don't want to log that (unless we're in debug mode)
+            tracker.Suppress = (_enableDebugMode == false) && (_urlCheck.IsLoupeUrl(actionContext));
+
             // Store this on the request
             actionContext.Request.Store(tracker);
 
             //And log the request
-            if (_configuration.LogRequests == false)
-                return;
+            if (_configuration.LogRequests &&
+                (tracker.Suppress == false))
+            {
+                var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
+                var requestLogging = new MonitorRequestLogging(actionContext, _configuration);
 
-            var caption = string.Format("Api {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
-            var requestLogging = new MonitorRequestLogging(actionContext,_configuration);
-
-            requestLogging.Log(Category,caption,tracker.UserName,tracker);
-
-            
+                requestLogging.Log(Category, caption, tracker.UserName, tracker);
+            }
 
             base.OnActionExecuting(actionContext);
         }

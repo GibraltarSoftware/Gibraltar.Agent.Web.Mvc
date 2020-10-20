@@ -6,8 +6,8 @@
     <title>Loupe Agent for ASP.NET MVC and Web API</title>
     <authors>Gibraltar Software</authors>
     <owners>Gibraltar Software</owners>
-    <copyright>Copyright © 2008-2018 Gibraltar Software, Inc.</copyright>
-    <licenseUrl>https://github.com/GibraltarSoftware/Gibraltar.Agent.Web.Mvc/blob/master/LICENSE.txt</licenseUrl>
+    <copyright>Copyright © 2008-2020 Gibraltar Software, Inc.</copyright>
+    <license type="expression">Apache-2.0</license>
     <projectUrl>https://github.com/GibraltarSoftware/Gibraltar.Agent.Web.Mvc</projectUrl>
     <iconUrl>http://www.gibraltarsoftware.com/loupe.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

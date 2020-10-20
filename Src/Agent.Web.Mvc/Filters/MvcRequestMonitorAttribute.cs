@@ -59,6 +59,8 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
     public class MvcRequestMonitorAttribute : ActionFilterAttribute
     {
         private readonly MvcAgentElement _configuration;
+        private readonly bool _enableDebugMode; //we don't have ready access to the Loupe running config; ignoring for now.
+        private readonly UrlCheck _urlCheck;
 
         /// <summary>
         /// Monitor MVC requests using the site-wide configuration settings
@@ -75,9 +77,12 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
         public MvcRequestMonitorAttribute(MvcAgentElement configuration)
         {
             if (configuration == null)
-                throw new ArgumentNullException("configuration");
+                throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
+
+            _urlCheck = new UrlCheck();
+
             Order = 0; //so we run first and last in general
         }
 
@@ -92,11 +97,15 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
             //create our request tracking object
             var tracker = new MvcRequestMetric(filterContext);
 
+            //If this is a Loupe client request then we don't want to log that (unless we're in debug mode)
+            tracker.Suppress = (_enableDebugMode == false) && (_urlCheck.IsLoupeUrl(filterContext));
+
             // Store this on the request
             HttpContext.Current.Store(tracker);
 
             //And log the request
-            if (_configuration.LogRequests)
+            if (_configuration.LogRequests && 
+                (tracker.Suppress == false))
             {
                 var caption = string.Format("Web Site {0} {1} Requested", tracker.ControllerName, tracker.ActionName);
 

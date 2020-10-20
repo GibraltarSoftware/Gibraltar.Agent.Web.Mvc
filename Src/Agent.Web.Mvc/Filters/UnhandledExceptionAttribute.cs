@@ -44,7 +44,7 @@ namespace Gibraltar.Agent.Web.Mvc.Filters
         public UnhandledExceptionAttribute(MvcAgentElement configuration)
         {
             if (configuration == null)
-                throw new ArgumentNullException("configuration");
+                throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
         }
