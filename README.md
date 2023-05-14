@@ -1,5 +1,8 @@
-Loupe Agent for ASP.NET MVC 4 and Web API
+Loupe Agent for ASP.NET MVC 4 and Web API (Moved to Gibraltar.Agent)
 ===================
+
+**This repository has been merged with the [Gibraltar.Agent](https://github.com/GibraltarSoftware/Gibraltar.Agent)
+Repository and is now maintained there.**
 
 This agent adds Loupe to your ASP.NET MVC 4 web site to automatically record performance
 and health information for your MVC and Web API application.  If you don't need
